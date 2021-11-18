@@ -2,6 +2,7 @@
 
 import sys
 import csv as csv
+import requests
 
 # url for the open Data Platform
 URL = "https://opendata.bristol.gov.uk/api/records/1.0/search/?dataset=quality-of-life-2018-19-ward&refine.indicator=%25+satisfied+with+their+local+area"

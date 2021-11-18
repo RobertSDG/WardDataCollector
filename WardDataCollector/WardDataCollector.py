@@ -3,15 +3,17 @@
 import sys
 import csv as csv
 import requests
+from urllib.parse import urlparse as urlparse
 
 # url for the open Data Platform
 
 def main():
     URL = "https://opendata.bristol.gov.uk/api/records/1.0/search/?dataset=quality-of-life-2018-19-ward&refine.indicator=%25+satisfied+with+their+local+area"
-    
-    fetch = requests.get(URL)
-    print(fetch.status_code)
-    print(fetch.json())
+    unity = urlparse(URL)
+    print (unity)
+    #fetch = requests.get(URL)
+    #print(fetch.status_code)
+    #print(fetch.json())
     return
 
 if __name__ == "__main__":

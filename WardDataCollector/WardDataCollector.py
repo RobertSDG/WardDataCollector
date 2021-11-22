@@ -36,23 +36,39 @@ def getData(url):
                 res = (ptr['ward_name'], ptr['ward_code'], ptr['statistic'])
             else:
                 res = (ptr['ward_name'], "", ptr['statistic'])
-            result += res
-            print(res)
+            result.append(res)
+            # print(res)
+            
             #print(x) 
-    else:
-        return []
+    return result
 
 # url for the open Data Platform
 
 def main():
     URL = "https://opendata.bristol.gov.uk/api/records/1.0/search/?dataset=quality-of-life-2018-19-ward&refine.indicator=%25+satisfied+with+their+local+area"
     unity = urlparse(URL)
-
+    datasetYear = [
+        "2017-18",
+        "2018-19",
+        "2019-20",
+        "2020-21"
+        ]
+    datasetTemplate = "quality-of-life-2018-19-ward"
     dataset = "quality-of-life-2018-19-ward"
     indicator = "% satisfied with their local area"
     u = buildUrl(dataset, indicator)
     r = getData(u)
-    print(r)
+    dict = {}
+
+    for x in datasetYear:
+        template = f'quality-of-life-{x}-ward'
+        print(template)
+        u = buildUrl(template, indicator)
+        r = getData(u)
+        dict[x]=r
+
+    print(dict)
+
     #print (unity)
     #fetch = requests.get(URL)
     #print(fetch.status_code)

@@ -1,3 +1,7 @@
+"""Class to pull deprivation data from the API"""
+import sys
+
+
 class DeprivationDataCollector(object):
     """Class to access time series of deprivation data from bristol open data api"""
 
@@ -15,3 +19,11 @@ class DeprivationDataCollector(object):
         print(uri)
         # requests.get(uri)
         return uri
+
+def main():
+    deprivation_data_collector = DeprivationDataCollector()
+    print (deprivation_data_collector.build_url("foo", "bar"))
+    pass
+
+if __name__ == "__main__":
+    sys.exit(int(main() or 0))

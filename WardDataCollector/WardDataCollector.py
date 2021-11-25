@@ -1,16 +1,22 @@
-# File to collect data from opendata.bristol api in a format that can be uploaded
-#  to the open data platform
+""" File to collect data from opendata.bristol api in a format that can be uploaded
+    to the open data platform
+"""
 
 import sys
-import csv as csv
-import requests
+import csv
 from urllib.parse import urlencode
 
-# Function accepts a json object from request and parses out the data to a array and returns
-# the array
-def parse_data(json):
+import requests
 
-    pass
+
+# Function accepts a dictionary and parses out the data to a array and returns
+# the array with the corrections. We do not want to include the name bristol
+# as that will force the platform to treat it as a headine indicator
+def parse_data(req_data):
+    for field in req_data:
+        if field[0] == ".Bristol Average":
+            field[0] = ""
+    return req_data
 
 # Function to build the URL to query the Open Data API
 def build_url(dataset, refine_indicator):
@@ -35,14 +41,18 @@ def get_data(url):
         for row in body:
             ptr = row['fields']
             if "ward_code" in ptr:
-                res = (ptr['ward_name'], ptr['ward_code'], ptr['statistic'])
+                res = [ptr['ward_name'], ptr['ward_code'], ptr['statistic']]
             else:
-                res = (ptr['ward_name'], "", ptr['statistic'])
+                res = [ptr['ward_name'], "", ptr['statistic']]
             result.append(res)
             # print(res)
 
             #print(x)
     return result
+
+def data_to_csv(data):
+    
+    pass
 
 # Main entry for script
 def main():
@@ -68,6 +78,10 @@ def main():
         response = get_data(url)
         datasets[row]=response
 
+    # print(datasets)
+
+    for key in datasets:
+        datasets[key] = parse_data(datasets[key])
     print(datasets)
 
     #print (unity)

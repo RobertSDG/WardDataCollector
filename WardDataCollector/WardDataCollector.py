@@ -81,6 +81,10 @@ def main():
         ]
     dataset = "quality-of-life-2018-19-ward"
     indicator = "% households which have experienced moderate to severe food insecurity"
+    indicators = [
+        "% households which have experienced moderate to severe food insecurity",
+        "% households which have experienced severe food insecurity"
+        ]
     url = build_url(dataset, indicator)
     response = get_data(url)
     datasets = {}

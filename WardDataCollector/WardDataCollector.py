@@ -27,7 +27,7 @@ def build_url(dataset, refine_indicator):
     #requests.get(uri)
     return uri
 
-# throws a excception on connection failed, this should be handled externally to retry after delay
+# throws a exception on connection failed, this should be handled externally to retry after delay
 def get_data(url):
     response = requests.get(url)
     print(response.status_code)
@@ -43,7 +43,7 @@ def get_data(url):
             if "ward_code" in ptr:
                 res = [ptr['ward_name'], ptr['ward_code'], ptr['statistic']]
             else:
-                res = [ptr['ward_name'], "", ptr['statistic']]
+                res = ["", "", ptr['statistic']]
             result.append(res)
             # print(res)
 
@@ -68,25 +68,28 @@ def data_to_csv(collection, file_name):
 
     return
 
-# Main entry for script
-def main():
-    # URL = "https://opendata.bristol.gov.uk/api/records/1.0/search/?
-    # dataset=quality-of-life-2018-19-ward&
-    # refine.indicator=%25+satisfied+with+their+local+area"
+def data_to_csv_multiple(collection:dict, file_name:str) -> None:
+    with open(file_name + '.csv', mode='w') as employee_file:
+        data_writer = csv.writer(employee_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+        # add headers
+        data_writer.writerow(['Year', 'Series', 'Ward', 'GeoCode','Value'])
+        for indicator in collection:
+            for year in collection[indicator]:
+                for line in collection[indicator][year]:
+                    temp = line
+                    temp.insert(0, indicator)
+                    temp.insert(0, year)
+                    data_writer.writerow(temp)
+
+    return
+
+def dataset_builder(indicator:str) -> dict:
     dataset_year = [
         "2017-18",
         "2018-19",
         "2019-20",
         "2020-21"
         ]
-    dataset = "quality-of-life-2018-19-ward"
-    indicator = "% households which have experienced moderate to severe food insecurity"
-    indicators = [
-        "% households which have experienced moderate to severe food insecurity",
-        "% households which have experienced severe food insecurity"
-        ]
-    url = build_url(dataset, indicator)
-    response = get_data(url)
     datasets = {}
 
     for row in dataset_year:
@@ -95,15 +98,30 @@ def main():
         url = build_url(template, indicator)
         response = get_data(url)
         datasets[row]=response
+    return datasets
 
-    # print(datasets)
+def dataset_builder_multiple(indicators:list) -> dict:
+    """ Function returns a nested dictionary containing datasets by disaggregation and then year"""
+    indicators_dict = {}
 
-    for key in datasets:
-        datasets[key] = parse_data(datasets[key])
-    print(datasets)
+    for indicator in indicators:
+        indicators_dict[indicator] = dataset_builder(indicator)
+    return indicators_dict
 
-    data_to_csv(datasets, indicator)
-    #print (unity)
+# Main entry for script
+def main():
+    # URL = "https://opendata.bristol.gov.uk/api/records/1.0/search/?
+    # dataset=quality-of-life-2018-19-ward&
+    # refine.indicator=%25+satisfied+with+their+local+area"
+
+    indicator = "% households which have experienced moderate to severe food insecurity"
+    indicators = [
+        "% households which have experienced moderate to severe food insecurity",
+        "% households which have experienced severe food insecurity"
+        ]
+
+    dataset = dataset_builder_multiple(indicators)
+    data_to_csv_multiple(dataset, indicators[0])
     #fetch = requests.get(URL)
     #print(fetch.status_code)
     #print(fetch.json())

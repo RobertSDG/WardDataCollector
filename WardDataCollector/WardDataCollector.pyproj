@@ -25,6 +25,9 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="DeprivationDataCollector.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="WardDataCollector.py" />
   </ItemGroup>
   <ItemGroup>

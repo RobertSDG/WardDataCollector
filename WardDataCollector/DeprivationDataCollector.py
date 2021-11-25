@@ -1,6 +1,8 @@
 """Class to pull deprivation data from the API"""
 import sys
+from urllib.parse import urlencode
 
+import requests
 
 class DeprivationDataCollector(object):
     """Class to access time series of deprivation data from bristol open data api"""
@@ -12,12 +14,12 @@ class DeprivationDataCollector(object):
         "2020-21":"quality-of-life-2020-21-deprivation"
         }
 
-    def build_url(dataset, refine_indicator):
+    def build_url(self, dataset, refine_indicator):
         get_vars = {"dataset": dataset, "rows": 50, "refine.indicator": refine_indicator}
         base_url = "https://opendata.bristol.gov.uk/api/records/1.0/search/?"
         uri = base_url + urlencode(get_vars)
         print(uri)
-        # requests.get(uri)
+        # requests.get(uri) 
         return uri
 
 def main():

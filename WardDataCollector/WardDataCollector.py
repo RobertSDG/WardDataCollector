@@ -50,9 +50,23 @@ def get_data(url):
             #print(x)
     return result
 
-def data_to_csv(data):
-    
-    pass
+def data_to_csv(collection, file_name):
+    #instantiate_file
+    with open(file_name + '.csv', mode='w') as employee_file:
+        data_writer = csv.writer(employee_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+        # write headers
+        data_writer.writerow(['Year', 'Ward', 'GeoCode','Value'])
+        # for each set of data
+        for key in collection:
+            # for each row (containing ward)
+            for item in collection[key]:
+                row = item
+                #add date to front of row
+                row.insert(0, key)
+                data_writer.writerow(row)
+
+
+    return
 
 # Main entry for script
 def main():
@@ -84,6 +98,7 @@ def main():
         datasets[key] = parse_data(datasets[key])
     print(datasets)
 
+    data_to_csv(datasets, indicator)
     #print (unity)
     #fetch = requests.get(URL)
     #print(fetch.status_code)

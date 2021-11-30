@@ -36,13 +36,15 @@ class DeprivationDataCollector(object):
             for row in body:
                 ptr = row["fields"]
                 # 'deprivation_decile': ['Least Deprived 10%','.Most Deprived 10%']
+                # if basic field exists
+                if 'deprivation_decile' in ptr:
+                    if 'least deprived 10%' in ptr['deprivation_decile'].lower:
+                        # check for lower 10
+                        result.append(['Least Deprived 10%',  ptr["statistic"]])
 
-                if "ward_code" in ptr:
-                    res = [ptr["ward_name"], ptr["ward_code"], ptr["statistic"]]
-                else:
-                    res = ["", "", ptr["statistic"]]
-                result.append(res)
-                # print(res)
+                    elif 'most deprived 10%' in ptr['deprivation_decile'].lower:
+                        # check for upper 10
+                        result.append(['Most Deprived 10%',  ptr["statistic"]])
 
                 # print(x)
         return result

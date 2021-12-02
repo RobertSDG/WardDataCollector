@@ -38,11 +38,14 @@ class DeprivationDataCollector(object):
                 # 'deprivation_decile': ['Least Deprived 10%','.Most Deprived 10%']
                 # if basic field exists
                 if 'deprivation_decile' in ptr:
-                    if 'least deprived 10%' in ptr['deprivation_decile'].lower:
+                    deprivation_decile = ptr['deprivation_decile'].lower()
+                    # deprivation_decile = deprivation_decile.lower()
+                    print(deprivation_decile + " is the label")
+                    if deprivation_decile.find('least deprived 10%') != -1:
                         # check for lower 10
                         result.append(['Least Deprived 10%',  ptr["statistic"]])
 
-                    elif 'most deprived 10%' in ptr['deprivation_decile'].lower:
+                    elif deprivation_decile.find('most deprived 10%') != -1:
                         # check for upper 10
                         result.append(['Most Deprived 10%',  ptr["statistic"]])
 

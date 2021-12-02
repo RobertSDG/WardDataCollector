@@ -1,3 +1,4 @@
+"""Class to build a dataset from multiple sources & disaggregations"""
 import sys
 
 import WardDataCollector

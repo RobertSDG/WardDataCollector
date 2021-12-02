@@ -1,7 +1,13 @@
 import sys
+
+import WardDataCollector
+import DeprivationDataCollector
+
 class DataCollector(object):
     """description of class"""
-    
+    def __init__(self,indicator):
+        self.indicator = indicator
+
 
 
 

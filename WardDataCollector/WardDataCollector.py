@@ -92,6 +92,7 @@ def data_to_csv_multiple(collection: dict, file_name: str) -> None:
 
 
 def dataset_builder(indicator: str) -> dict:
+    """returns dataset for the indicator passed"""
     dataset_year = ["2017-18", "2018-19", "2019-20", "2020-21"]
     datasets = {}
 

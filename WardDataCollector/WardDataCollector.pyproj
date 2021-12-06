@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>3b1297d6-68c8-4d36-a9ea-3f83cab6f436</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>DeprivationDataCollector.py</StartupFile>
+    <StartupFile>DataCollector.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -25,6 +25,9 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="DataCollector.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="DeprivationDataCollector.py">
       <SubType>Code</SubType>
     </Compile>

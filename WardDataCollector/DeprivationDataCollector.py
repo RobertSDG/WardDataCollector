@@ -13,6 +13,9 @@ class DeprivationDataCollector(object):
         "2018-19": "quality-of-life-2018-19-deprivation",
         "2019-20": "quality-of-life-2019-20-deprivation",
         "2020-21": "quality-of-life-2020-21-deprivation",
+        "2021-22": "quality-of-life-2021-22-deprivation",
+        "2022-23": "quality-of-life-2022-23-deprivation",
+        "2023-24": "quality-of-life-2023-24-deprivation",
     }
 
     def build_url(self, dataset: str, refine_indicator: str):
